@@ -5,13 +5,13 @@
     Program Name: patient-form.css
     Author: Ashley Danielle Fields
     Date created: June 9th, 2025
-    Date last edited: June 12th, 2025
+    Date last edited: June 13th, 2025
     Version: 1.0
     Description: Patient intake form CSS 
 */
 
 #background_picture {
-    background-image: url('medicine_background.jpg'); /*https://slidechef.net/wp-content/uploads/2022/10/Free-Medicine-Background.jpg */
+    background-image: url('medicine_background.jpg'); /* https://slidechef.net/wp-content/uploads/2022/10/Free-Medicine-Background.jpg */
     background-position: center;
     background-size: cover;
 }
