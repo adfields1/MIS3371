@@ -1,0 +1,138 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*
+    Program Name: patient-form.css
+    Author: Ashley Danielle Fields
+    Date created: June 9th, 2025
+    Date last edited: June 13th, 2025
+    Version: 1.0
+    Description: Patient intake form CSS 
+*/
+
+#background_picture {
+    background-image: url('medicine_background.jpg'); /* https://slidechef.net/wp-content/uploads/2022/10/Free-Medicine-Background.jpg */
+    background-position: center;
+    background-size: cover;
+}
+
+#header {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    border: 2px solid black;
+    padding: 20px;
+    background-color: white;
+}
+
+#current_date {
+    float: right;
+}
+
+#form_body {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    border: 2px solid black;
+    padding: 20px;
+    background-color: white;
+}
+
+#health_slider {
+    width:  100%;
+}
+
+.slider {
+    width: 75%;
+    height: 15px;
+    border-radius: 5px;
+    background: #fdb4aafd;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #5bc4e4;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #5bc4e4;
+  cursor: pointer;
+}
+
+#form_buttons {
+    margin: auto;
+}
+
+input[type=reset] {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-color:rgb(245, 49, 49);
+    border: none;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    width: 150px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+input[type=reset]:hover {
+    background-color:rgb(247, 244, 244);
+    border: 2px solid rgb(245, 49, 49);
+    color: rgb(245, 49, 49);
+    text-align: center;
+    padding: 15px;
+    width: 150px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+input[type=submit] {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-color:rgb(10, 173, 32);
+    border: none;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    width: 150px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: white;
+    border: 2px solid rgb(10, 173, 32);
+    color: rgb(10, 173, 32);
+    text-align: center;
+    padding: 15px;
+    width: 150px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#footer {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    border: 2px solid black;
+    padding: 20px;
+    background-color: white;
+}
+
