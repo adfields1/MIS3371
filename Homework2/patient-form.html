@@ -3,9 +3,9 @@
     Program Name: patient-form.html
     Author: Ashley Danielle Fields
     Date created: June 9th, 2025
-    Date last edited: June 13th, 2025
-    Version: 1.0
-    Description: Patient intake form 
+    Date last edited: June 18th, 2025
+    Version: 2.0
+    Description: Patient intake form for Homework 2, validate form data and return outputs for review
 -->
 <html>
 <header>
@@ -24,7 +24,7 @@
             </table>
         </div><!--End Header div-->
         <br/>
-        <form action="patient-form-submission.html">
+        <form action="patient-form-submission.html" onsubmit="return check_password()">
             <div id="form_body">
                 <h1>PATIENT REGISTRATION FORM</h1>
                 <table><!--Patient personal information and symptoms fields-->
@@ -38,13 +38,15 @@
                             <input type="text"
                                 size="30"
                                 maxlength="30"
-                                min="1"
+                                minlength="1"
                                 id="first_name"
                                 name="first_name"
                                 required
                                 placeholder="required"
+                                pattern="[A-Z^a-z-'-]{1,30}"
+                                title="First name should be 1-30 characters with letters, apostrophes, or dashes only"
+                                oninvalid="this.setCustomValidity('First name should be 1-30 characters with letters, apostrophes, or dashes only')"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('First name needs to be no more than 30 characters')"
                             >
                         </td>
                         <td>
@@ -53,19 +55,25 @@
                                 maxlength="1"
                                 id="middle_initial"
                                 name="middle_initial"
+                                pattern="[A-Z^a-z]{0,}"
+                                title="Inital only, not required, letters only"
+                                oninvalid="this.setCustomValidity('Middle initial should be a letter only')"
+                                oninput="this.setCustomValidity('')"
                             >
                         </td>
                         <td>
                             <input type="text"
                                 size="30"
                                 maxlength="30"
-                                minlength="2"
+                                minlength="1"
                                 id="last_name"
                                 name="last_name"
                                 required
                                 placeholder="required"
+                                pattern="[A-Za-z'-235]{1,30}"
+                                title="Last name should be 1-30 characters with letters, apostrophes, dashes, and numbers 2-5 only for inherited names"
+                                oninvalid="this.setCustomValidity('Last name should be 1-30 characters with letters, apostrophes, dashes, and numbers 2-5 only for inherited names')"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('Last name needs to be at least 2 letters and no more than 30')"
                             >
                         </td>
                     </tr>
@@ -81,12 +89,15 @@
                             <input type="date"
                                 size="8"
                                 maxlength="8"
+                                min="1905-06-21"
+                                max="2025-06-21"
                                 id="dob"
                                 name="dob"
-                                required
                                 placeholder="required"
+                                Title="Date of birth"
+                                oninvalid="this.setCustomValidity('Please select a valid date')"
                                 oninput="this.setCustomValidity('')"
-                            >
+                            > <!-- hard coding min and max dates for now per instructions-->
                         </td>
                         <td>
                             <input type="password"
@@ -95,9 +106,9 @@
                                 minlength="9"
                                 id="ssn"
                                 name="ssn"
-                                required
                                 placeholder="xxx-xx-xxxx"
                                 pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}"
+                                title="Social Security Number"
                                 oninput="this.setCustomValidity('')"
                                 oninvalid="this.setCustomValidity('Please enter a valid SSN')"
                             >
@@ -117,30 +128,32 @@
                             <input type="text"
                                 size="30"
                                 maxlength="30"
-                                minlength="5"
+                                minlength="2"
                                 id="address1"
                                 name="address1"
                                 required
                                 placeholder="required"
+                                title="Address Line 1"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('Address line 1 needs to be at least 5 characters and no more than 30')"
+                                oninvalid="this.setCustomValidity('Address line 1 needs to be between 2 and 30 characters')"
                             >
                         </td>
                         <td>
                             <input type="text"
                                 size="30"
                                 maxlength="30"
-                                minlength="5"
+                                minlength="2"
                                 id="city"
                                 name="city"
                                 required
                                 placeholder="required"
+                                title="City"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('City needs to be at least 5 characters and no more than 30')"
+                                oninvalid="this.setCustomValidity('City needs to be 2 to 30 characters')"
                             >
                         </td>
                         <td>
-                            <select required>
+                            <select id="state" required>
                                 <option value=""></option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -203,8 +216,9 @@
                                 minlength="5"
                                 id="zip_code"
                                 name="zip_code"
-                                required
-                                placeholder="required"
+                                placeholder="xxxxx-xxxx"
+                                pattern="[0-9-]{10}"
+                                title="Zip Code"
                                 oninput="this.setCustomValidity('')"
                                 oninvalid="this.setCustomValidity('Please enter a valid zip code')"
                             >
@@ -217,10 +231,12 @@
                         <td>
                             <input type="text"
                                 size="30"
+                                minlength="2"
                                 maxlength="30"
                                 id="address2"
                                 name="address2"
-                                oninvalid="this.setCustomValidity('Address line 2 needs to be no more than 30 characters if populated')"
+                                title="Address Line 2 if applicable"
+                                oninvalid="this.setCustomValidity('Address line 2 needs to be 2 to 30 characters if populated')"
                             >
                         </td>
                     </tr>
@@ -239,21 +255,21 @@
                                 minlength="10"
                                 id="email"
                                 name="email"
-                                required
                                 placeholder="required"
+                                title="Email with appropriate domain"
                                 oninput="this.setCustomValidity('')"
                                 oninvalid="this.setCustomValidity('Please enter a valid email address')"
                             >
                         </td>
                         <td>
-                            <input type="phone"
+                            <input type="tel"
                                 size="12"
                                 maxlength="12"
                                 id="phone"
                                 name="phone"
-                                required
                                 placeholder="xxx-xxx-xxxx"
                                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                Title="Phone number with area code"
                                 oninput="this.setCustomValidity('')"
                                 oninvalid="this.setCustomValidity('Please enter a valid phone number with the area code')"
                             >
@@ -274,8 +290,7 @@
                             maxlength="256"
                             minlength="3"
                             name="current_symptoms"
-                            required
-                            placeholder="required"
+                            Title="Please describe any current symptoms"
                             oninput="this.setCustomValidity('')"
                             oninvalid="this.setCustomValidity('Please enter symptoms or N/A')"
                             ></textarea><!--Putting on same line to start typing cursor at beginning of text box-->
@@ -302,9 +317,18 @@
                 <table><!--Gender, vaccination, and insurance fields-->
                     <tr>
                         <td>Gender:</td>
-                        <td><input type="radio" id="gender" name="gender" value="gender"><label for="gender">&nbsp;&nbsp;Male</label></td>
-                        <td><input type="radio" id="gender" name="gender" value="gender"><label for="gender">&nbsp;&nbsp;Female</label></td>
-                        <td><input type="radio" id="gender" name="gender" value="gender"><label for="gender">&nbsp;&nbsp;Other</label></td>
+                    <td>
+                        <input type="radio" id="gender_male" name="gender" value="Male">
+                        <label for="gender_male">&nbsp;&nbsp;Male</label>
+                    </td>
+                    <td>
+                        <input type="radio" id="gender_female" name="gender" value="Female">
+                        <label for="gender_female">&nbsp;&nbsp;Female</label>
+                    </td>
+                    <td>
+                        <input type="radio" id="gender_other" name="gender" value="Other">
+                        <label for="gender_other">&nbsp;&nbsp;Other</label>
+                    </td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
@@ -322,9 +346,19 @@
                 </table><!--End Gender, vaccination, and insurance fields-->
                 <div id="health_slider">
                     <p>On a scale of 1 to 10, 10 being feeling good, how is your health?</p>
-                    <input type="range" min="1" max="10" value="1" class="slider" id="health_scale" oninput="num.value= this.value"><!--Display slider value-->
-                    <output id="num">1</output>
+                    <input type="range" min="1" max="10" value="1" class="slider" id="health_scale" oninput="num.value= this.value"><!--health slider properties-->
+                    <br/>
+                    <span id="health_num"></span>
                 </div><!--End div health_slider-->
+                <script> /* display health slider value */
+                    var slider = document.getElementById("health_scale");
+                    var output = document.getElementById("health_num");
+                    output.innerHTML = slider.value;
+
+                    slider.oninput = function() {
+                    output.innerHTML = this.value;
+                    }
+                </script> <!-- end display health slider value -->
                 <br/>
                 <table><!--UserID and password fields-->
                     <tr>
@@ -333,15 +367,17 @@
                     <tr>
                         <td>
                             <input type="text"
-                                size="20"
-                                maxlength="20"
+                                size="30"
+                                maxlength="30"
                                 minlength="5"
                                 id="user_id"
                                 name="user_id"
                                 required
                                 placeholder="required"
+                                pattern="^[A-Za-z_-][A-Za-z0-9_-]{4,29}$"
+                                title="Must be 5-30 characters, no special characters, first character cannot be a number"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('Please enter a valid user ID at least 5 characters and no more than 20')"
+                                oninvalid="this.setCustomValidity('Please enter a valid user ID with 5-30 characters, no special characters, first character cannot be a number')"
                             >
                         </td>
                     </tr>
@@ -351,15 +387,16 @@
                     <tr>
                         <td>
                             <input type="password"
-                                size="21"
-                                maxlength="20"
+                                size="30"
+                                maxlength="30"
                                 minlength="8"
                                 id="password_hashed"
                                 name="password_hashed"
-                                required
                                 placeholder="required"
+                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$"
+                                title="Password with 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('Please enter a valid password at least 8 characters and no more than 20')"
+                                oninvalid="this.setCustomValidity('Please enter a valid password 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations')"
                             >
                         </td>
                     </tr>
@@ -369,23 +406,40 @@
                     <tr>
                         <td>
                             <input type="password"
-                                size="21"
-                                maxlength="20"
+                                size="30"
+                                maxlength="30"
                                 minlength="8"
-                                id="password_hashed"
-                                name="password_hashed"
-                                required
+                                id="password_hashed_match"
+                                name="password_hashed_match"
                                 placeholder="required"
+                                title="Password with 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('Please enter a valid password at least 8 characters and no more than 20')"
+                                oninvalid="this.setCustomValidity('Please enter a valid password 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations')"
                             >
                         </td>
                     </tr>
                 </table><!--End UserID and password fields-->
+                <script>/* validation to check if passwords match */
+                    function check_password() {
+                        const password1 = document.getElementById("password_hashed").value;
+                        const password2 = document.getElementById("password_hashed_match").value;
+
+                        if (password1 !== password2) {
+                            alert("Passwords do not match");
+                            return false;
+                        }
+
+                        else {
+                            return true;
+                        }
+                    }
+                </script> <!-- end validation to check if passwords match -->
                 <br/>
                 <table id="form_buttons"><!-- Start and Submit buttons -->
                     <tr>
                         <td><input type="reset" name="start_over_button" value="Start Over" /></td>
+                        <td>&nbsp;</td>
+                        <td><button type="button" class="review_button" onclick="review_data()">Review Submission</button></td>
                         <td>&nbsp;</td>
                         <td><input type="submit" name="submit_button" value="Submit" /></td>
                     </tr>
@@ -395,6 +449,57 @@
                 </table><!-- End Start over and Submit buttons -->
             </div><!--End div form_body-->
         </form>
+        <script> /* to return values when Review Submission is clicked */
+            function review_data() {
+                document.getElementById("displayFirstName").textContent = document.getElementById("first_name").value;
+                document.getElementById("displayMiddleInitial").textContent = document.getElementById("middle_initial").value;
+                document.getElementById("displayLastName").textContent = document.getElementById("last_name").value;
+                const current_dob_format = document.getElementById("dob").value; /* format DOB to MM/DD/YYYY */
+                const formatted_dob = new Date(current_dob_format).toLocaleDateString();
+                document.getElementById("displayDOB").textContent = formatted_dob; /* new DOB format to be displayed */
+                document.getElementById("displaySSN").textContent = document.getElementById("ssn").value;
+                document.getElementById("displayAddress1").textContent = document.getElementById("address1").value;
+                document.getElementById("displayAddress2").textContent = document.getElementById("address2").value;
+                document.getElementById("displayCity").textContent = document.getElementById("city").value;
+                /*format state to display full name */
+                const state_abbrev = document.getElementById("state");
+                const full_state_name = state_abbrev.options[state_abbrev.selectedIndex].text;
+                document.getElementById("displayState").textContent = full_state_name;
+                document.getElementById("displayZipCode").textContent = document.getElementById("zip_code").value;
+                document.getElementById("displayEmail").textContent = document.getElementById("email").value;
+                document.getElementById("displayPhone").textContent = document.getElementById("phone").value;
+                /* using ternary operator to change values to Y or N if checked or not */
+                document.getElementById("displayCurrentSymptoms").textContent = document.getElementById("current_symptoms").value;
+                document.getElementById("displayCancerCheck").textContent = document.getElementById("cancer_check").checked ? "Y":"N";
+                document.getElementById("displayArthritisCheck").textContent = document.getElementById("arthritis_check").checked ? "Y":"N";
+                document.getElementById("displayCardioCheck").textContent = document.getElementById("cardio_check").checked ? "Y":"N";
+                document.getElementById("displayDiabetesCheck").textContent = document.getElementById("diabetes_check").checked ? "Y":"N";
+                document.getElementById("displayDepressionCheck").textContent = document.getElementById("depression_check").checked ? "Y":"N";
+                const gender_value = document.getElementById("")
+                document.getElementById("form_review").style.display = "block"; /* display in new section once Review button is selected, accompanying formatting on CSS */
+                }
+        </script><!-- end Review Submission script-->
+        <div id="form_review">
+            <h2>Please review the inputted information before submitting</h2>
+            <p><strong>First Name: </strong><span id="displayFirstName"></span></p>
+            <p><strong>Middle Initial: </strong><span id="displayMiddleInitial"></span></p>
+            <p><strong>Last Name: </strong><span id="displayLastName"></span></p>
+            <p><strong>Date of Birth: </strong><span id="displayDOB"></span></p>
+            <p><strong>SSN: </strong><span id="displaySSN"></span></p>
+            <p><strong>Address Line 1: </strong><span id="displayAddress1"></span></p>
+            <p><strong>Address Line 2: </strong><span id="displayAddress2"></span></p>
+            <p><strong>City: </strong><span id="displayCity"></span></p>
+            <p><strong>State: </strong><span id="displayState"></span></p>
+            <p><strong>Zip Code: </strong><span id="displayZipCode"></span></p>
+            <p><strong>Email Address: </strong><span id="displayEmail"></span></p>
+            <p style="word-wrap:break-word;"><strong>Current Symptoms: </strong><span id="displayCurrentSymptoms"></span></p> <!--in-line CSS to wrap symptoms text to border-->
+            <p><strong>Phone Number: </strong><span id="displayPhone"></span></p>
+            <p><strong>Cancer: </strong><span id="displayCancerCheck"></span></p>
+            <p><strong>Arthritis: </strong><span id="displayArthritisCheck"></span></p>
+            <p><strong>Cardiovascular Diseases: </strong><span id="displayCardioCheck"></span></p>
+            <p><strong>Diabetes: </strong><span id="displayDiabetesCheck"></span></p>
+            <p><strong>Depression: </strong><span id="displayDepressionCheck"></span></p>
+        </div>
         <br/>
         <div id="footer">
             <table><!--Sunshine Health logo and address-->
@@ -418,5 +523,6 @@
                 </tr>
             </table><!--End Footer links-->
         </div><!--End div footer-->
+        <!-- <script src="patient-form.js"></script> --> <!-- placeholder for future .js file, using in-line javascript for now-->
 </body>
 </html>

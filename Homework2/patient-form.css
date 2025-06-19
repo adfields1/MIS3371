@@ -126,6 +126,42 @@ input[type=submit]:hover {
     cursor: pointer;
 }
 
+.review_button {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-color:rgb(22, 60, 185);
+    border: none;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    width: 150px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.review_button:hover {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    background-color:white;
+    border: none;
+    color: rgb(22, 60, 185);
+    text-align: center;
+    padding: 15px;
+    width: 150px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#form_review {
+    margin-top: 15px;
+    display: none;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    border: 2px solid black;
+    padding: 20px;
+    background-color: white;
+}
+
 #footer {
     width: 1000px;
     margin-left: auto;
