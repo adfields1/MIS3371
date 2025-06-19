@@ -45,6 +45,9 @@
 }
 
 .slider {
+    -webkit-appearance: none; /* removes default styling in Chrome/Safari */
+    -moz-appearance: none;    /* removes default in Firefox */
+    appearance: none;
     width: 75%;
     height: 15px;
     border-radius: 5px;

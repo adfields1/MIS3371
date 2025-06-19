@@ -153,7 +153,7 @@
                             >
                         </td>
                         <td>
-                            <select id="state" required>
+                            <select id="state" name="state" required>
                                 <option value=""></option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -318,16 +318,16 @@
                     <tr>
                         <td>Gender:</td>
                     <td>
-                        <input type="radio" id="gender_male" name="gender" value="Male">
-                        <label for="gender_male">&nbsp;&nbsp;Male</label>
+                        <input type="radio" id="male" name="gender" value="Male">
+                        <label for="gender">&nbsp;&nbsp;Male</label>
                     </td>
                     <td>
-                        <input type="radio" id="gender_female" name="gender" value="Female">
-                        <label for="gender_female">&nbsp;&nbsp;Female</label>
+                        <input type="radio" id="gender" name="gender" value="Female">
+                        <label for="gender">&nbsp;&nbsp;Female</label>
                     </td>
                     <td>
-                        <input type="radio" id="gender_other" name="gender" value="Other">
-                        <label for="gender_other">&nbsp;&nbsp;Other</label>
+                        <input type="radio" id="other" name="gender" value="Other">
+                        <label for="gender">&nbsp;&nbsp;Other</label>
                     </td>
                     </tr>
                     <tr>
@@ -335,13 +335,13 @@
                     </tr>
                     <tr>
                         <td>Have you been vaccinated?</td>
-                        <td><input type="radio" id="vaccinated" name="vaccinated" value="vaccinated"><label for="vaccinated">&nbsp;&nbsp;YES</label></td>
-                        <td><input type="radio" id="vaccinated" name="vaccinated" value="vaccinated"><label for="vaccinated">&nbsp;&nbsp;NO</label></td>
+                        <td><input type="radio" id="vaccinated" name="vaccinated" value="Yes"><label for="vaccinated">&nbsp;&nbsp;YES</label></td>
+                        <td><input type="radio" id="vaccinated" name="vaccinated" value="No"><label for="vaccinated">&nbsp;&nbsp;NO</label></td>
                     </tr>
                     <tr>
                         <td>Do you have insurance?</td>
-                        <td><input type="radio" id="insurance" name="insurance" value="insurance"><label for="insurance">&nbsp;&nbsp;YES</label></td>
-                        <td><input type="radio" id="insurance" name="insurance" value="insurance"><label for="insurance">&nbsp;&nbsp;NO</label></td>
+                        <td><input type="radio" id="insurance" name="insurance" value="Yes"><label for="insurance">&nbsp;&nbsp;YES</label></td>
+                        <td><input type="radio" id="insurance" name="insurance" value="No"><label for="insurance">&nbsp;&nbsp;NO</label></td>
                     </tr>
                 </table><!--End Gender, vaccination, and insurance fields-->
                 <div id="health_slider">
@@ -375,9 +375,9 @@
                                 required
                                 placeholder="required"
                                 pattern="^[A-Za-z_-][A-Za-z0-9_-]{4,29}$"
-                                title="Must be 5-30 characters, no special characters, first character cannot be a number"
+                                title="Must be 5-30 characters, no special characters or spaces, first character cannot be a number"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('Please enter a valid user ID with 5-30 characters, no special characters, first character cannot be a number')"
+                                oninvalid="this.setCustomValidity('Please enter a valid user ID with 5-30 characters, no special characters or spaces, first character cannot be a number')"
                             >
                         </td>
                     </tr>
@@ -396,7 +396,7 @@
                                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$"
                                 title="Password with 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('Please enter a valid password 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations')"
+                                oninvalid="this.setCustomValidity('Please enter a valid password 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations, and not contain the User ID')"
                             >
                         </td>
                     </tr>
@@ -414,18 +414,24 @@
                                 placeholder="required"
                                 title="Password with 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations"
                                 oninput="this.setCustomValidity('')"
-                                oninvalid="this.setCustomValidity('Please enter a valid password 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations')"
+                                oninvalid="this.setCustomValidity('Please enter a valid password 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations, and not contain the User ID')"
                             >
                         </td>
                     </tr>
                 </table><!--End UserID and password fields-->
                 <script>/* validation to check if passwords match */
                     function check_password() {
+                        const userID = document.getElementById("user_id").value;
                         const password1 = document.getElementById("password_hashed").value;
                         const password2 = document.getElementById("password_hashed_match").value;
 
                         if (password1 !== password2) {
                             alert("Passwords do not match");
+                            return false;
+                        }
+
+                        else if (password1.includes(userID)) {
+                            alert("Password cannot contain any part of the User ID");
                             return false;
                         }
 
@@ -468,14 +474,24 @@
                 document.getElementById("displayZipCode").textContent = document.getElementById("zip_code").value;
                 document.getElementById("displayEmail").textContent = document.getElementById("email").value;
                 document.getElementById("displayPhone").textContent = document.getElementById("phone").value;
-                /* using ternary operator to change values to Y or N if checked or not */
                 document.getElementById("displayCurrentSymptoms").textContent = document.getElementById("current_symptoms").value;
+                /* using ternary operator to change values to Y or N if checked or not */
                 document.getElementById("displayCancerCheck").textContent = document.getElementById("cancer_check").checked ? "Y":"N";
                 document.getElementById("displayArthritisCheck").textContent = document.getElementById("arthritis_check").checked ? "Y":"N";
                 document.getElementById("displayCardioCheck").textContent = document.getElementById("cardio_check").checked ? "Y":"N";
                 document.getElementById("displayDiabetesCheck").textContent = document.getElementById("diabetes_check").checked ? "Y":"N";
                 document.getElementById("displayDepressionCheck").textContent = document.getElementById("depression_check").checked ? "Y":"N";
-                const gender_value = document.getElementById("")
+                const gender_value = document.querySelector('input[name="gender"]:checked').value;
+                document.getElementById('displayGender').textContent = gender_value;
+                const vaccinated_value = document.querySelector('input[name="vaccinated"]:checked').value;
+                document.getElementById('displayVaccinated').textContent = vaccinated_value;
+                const insurance_value = document.querySelector('input[name="insurance"]:checked').value;
+                document.getElementById('displayInsurance').textContent = insurance_value;
+                const health_num = document.getElementById('health_scale').value;
+                document.getElementById('displayHealthNum').textContent = health_num;
+                document.getElementById("displayUserID").textContent = document.getElementById("user_id").value;
+                document.getElementById("displayPasswordHashed").textContent = document.getElementById("password_hashed").value;
+                document.getElementById("displayPassowrdHashedMatch").textContent = document.getElementById("password_hashed_match").value;
                 document.getElementById("form_review").style.display = "block"; /* display in new section once Review button is selected, accompanying formatting on CSS */
                 }
         </script><!-- end Review Submission script-->
@@ -499,6 +515,13 @@
             <p><strong>Cardiovascular Diseases: </strong><span id="displayCardioCheck"></span></p>
             <p><strong>Diabetes: </strong><span id="displayDiabetesCheck"></span></p>
             <p><strong>Depression: </strong><span id="displayDepressionCheck"></span></p>
+            <p><strong>Gender: </strong><span id="displayGender"></span></p>
+            <p><strong>Vaccinated: </strong><span id="displayVaccinated"></span></p>
+            <p><strong>Insurance: </strong><span id="displayInsurance"></span></p>
+            <p><strong>Health: </strong><span id="displayHealthNum"></span></p>
+            <p><strong>User ID: </strong><span id="displayUserID"></span></p>
+            <p><strong>Password: </strong><span id="displayPasswordHashed"></span></p><!-- displaying password in plaintext for assignment-->
+            <p><strong>Password Check: </strong><span id="displayPasswordHashedMatch"></span></p><!-- displaying password in plaintext for assignment-->
         </div>
         <br/>
         <div id="footer">
