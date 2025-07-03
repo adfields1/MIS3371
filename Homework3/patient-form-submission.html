@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+    Program Name: patient-form.html
+    Author: Ashley Danielle Fields
+    Date created: June 9th, 2025
+    Date last edited: June 13th, 2025
+    Version: 1.0
+    Description: Patient intake form 
+-->
+<html>
+<header>
+    <meta charset="UTF-8" />
+    <title>Submission Confirmation</title>
+    <link rel="stylesheet" href="patient-form.css">
+</header>
+<body id="background_picture">
+        <div id="header">
+            <div id="current_date"><i>Today's Date: <span id="today"></i></span></div><!--For aligning Today's Date to right side of page-->
+            <script>document.getElementById("today").innerHTML = new Date().toLocaleDateString();</script><!--Dynamic current date-->
+            <table>
+                <tr>
+                    <td><a href="patient-form.html"><img src="sh_logo.PNG" alt="Sunshine Health"></a></td>
+                </tr>
+            </table>
+        </div><!--End Header div-->
+        <br/>
+            <div id="form_body">
+                <h2>Thank you for your submission</h2>
+                <p>Our team will be with you shortly</p>
+            </div>
+        <br/>
+        <div id="footer">
+            <table><!--Sunshine Health logo and address-->
+                <tr>
+                    <td>Sunshine Health<img id="logo" src="footer_sunshine_logo.PNG" alt="Sunshine Health"></td>
+                </tr>
+                <tr>
+                    <td>PO Box 123456</td>
+                </tr>
+                <tr>
+                    <td>The Woodlands, TX 77381</td>
+                </tr>
+            </table><!--End Sunshine Health logo and address-->
+            <table><!--Footer links-->
+                <tr>
+                    <td><a href="contact.html">Contact Us</a></td>
+                    <td>&nbsp;</td>
+                    <td><a href="https://facebook.com">Facebook</a></td>
+                    <td>&nbsp;</td>
+                    <td><a href="https://linkedin.com">LinkedIn</a></td>
+                </tr>
+            </table><!--End Footer links-->
+        </div><!--End div footer-->
+</body>
+</html>
