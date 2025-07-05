@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<!--
+    Program Name: patient-form.html
+    Author: Ashley Danielle Fields
+    Date created: June 9th, 2025
+    Date last edited: July 2nd, 2025
+    Version: 3.0
+    Description: Patient intake form for Homework 2, validate form data and return outputs for review
+-->
+<html>
+<header>
+    <meta charset="UTF-8" />
+    <title>Patient Registration Form</title>
+    <link rel="stylesheet" href="patient-form.css">
+</header>
+<body id="background_picture">
+        <br/>
+        <form action="patient-form-submission.html" onsubmit="return validateForm()">
+            <div id="form_body">
+                <h1>PATIENT REGISTRATION FORM</h1>
+                <table><!--Patient personal information and symptoms fields-->
+                    <tr>
+                        <td><label for="first_name">First Name</label></td>
+                        <td><label for="middle_initial">Middle Initial</label></td>
+                        <td><label for="last_name">Last Name</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text"
+                                size="30"
+                                maxlength="30"
+                                minlength="1"
+                                id="first_name"
+                                name="first_name"
+                                required
+                                placeholder="required"
+                                title="First name should be 1-30 characters with letters, apostrophes, or dashes only"
+                                oninvalid="this.setCustomValidity('First name should be 1-30 characters with letters, apostrophes, or dashes only')"
+                                onblur="firstName_validation();"
+                                oninput="firstName_validation()"
+                            >
+                            <div id="first_name_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                        <td>
+                            <input type="text"
+                                size="1"
+                                maxlength="1"
+                                id="middle_initial"
+                                name="middle_initial"
+                                pattern="[A-Z^a-z]{0,}"
+                                title="Inital only, not required, letters only"
+                                oninvalid="this.setCustomValidity('Middle initial should be a letter only')"
+                                oninput="this.setCustomValidity('');"
+                                onblur="middleInitial_validation()"
+                            >
+                            <div id="middle_initial_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                        <td>
+                            <input type="text"
+                                size="30"
+                                maxlength="30"
+                                minlength="1"
+                                id="last_name"
+                                name="last_name"
+                                required
+                                placeholder="required"
+                                title="Last name should be 1-30 characters with letters, apostrophes, dashes, and numbers 2-5 only for inherited names"
+                                oninvalid="this.setCustomValidity('Last name should be 1-30 characters with letters, apostrophes, dashes, and numbers 2-5 only for inherited names')"
+                                onblur="lastName_validation();"
+                                oninput="lastName_validation()"
+                            >
+                            <div id="last_name_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><label for="dob">Date of Birth</label></td>
+                        <td><label for="ssn">SSN</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="date"
+                                size="8"
+                                maxlength="8"
+                                id="dob"
+                                name="dob"
+                                placeholder="required"
+                                Title="Date of birth"
+                                oninvalid="this.setCustomValidity('Please select a valid date')"
+                                onblur="dob_validation();"
+                                oninput="dob_validation()"
+                            >
+                            <div id="dob_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                        <td>
+                            <input type="password"
+                                size="11"
+                                maxlength="11"
+                                id="ssn"
+                                name="ssn"
+                                placeholder="___-__-____"
+                                title="Please enter a 9-digit SSN, dashes will be added automatically"
+                                oninvalid="this.setCustomValidity('Please enter a 9-digit SSN, dashes will be added automatically')"
+                                oninput="ssn_format(this)"
+                                onblur="ssn_validation();"
+                            >
+                            <div id="ssn_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><label for="address1">Address Line 1</label></td>
+                        <td><label for="city">City</label></td>
+                        <td><label for="state">State</label></td>
+                        <td><label for="address2">Zip Code</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text"
+                                size="30"
+                                maxlength="30"
+                                minlength="2"
+                                id="address1"
+                                name="address1"
+                                required
+                                placeholder="required"
+                                title="Address Line 1"
+                                oninput="this.setCustomValidity('')"
+                                oninvalid="this.setCustomValidity('Address line 1 needs to be between 2 and 30 characters')"
+                                onblur="address1_validation();"
+                            >
+                            <div id="address1_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                        <td>
+                            <input type="text"
+                                size="30"
+                                maxlength="30"
+                                minlength="2"
+                                id="city"
+                                name="city"
+                                required
+                                placeholder="required"
+                                title="City"
+                                oninput="this.setCustomValidity('')"
+                                oninvalid="this.setCustomValidity('City needs to be 2 to 30 characters')"
+                                onblur="city_validation();"
+                            >
+                            <div id="city_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                        <td>
+                            <select id="state" required>
+                                <option value=""></option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="PR">Puerto Rico</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text"
+                                size="5"
+                                maxlength="5"
+                                minlength="5"
+                                inputmode="numeric"
+                                id="zip_code"
+                                name="zip_code"
+                                placeholder="xxxxx"
+                                title="Zip Code"
+                                oninput="this.setCustomValidity('')"
+                                oninvalid="this.setCustomValidity('Please enter a valid zip code')"
+                                onblur="zip_validation();"
+                            >
+                            <div id="zip_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="address2">Address Line 2</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text"
+                                size="30"
+                                minlength="2"
+                                maxlength="30"
+                                id="address2"
+                                name="address2"
+                                title="Address Line 2 if applicable"
+                                oninvalid="this.setCustomValidity('Address line 2 needs to be 2 to 30 characters if populated')"
+                                onblur="address2_validation();"
+                            >
+                            <div id="address2_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">Email Address</label></td>
+                        <td><label for="phone">Phone Number</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="email"
+                                size="40"
+                                maxlength="40"
+                                minlength="10"
+                                id="email"
+                                name="email"
+                                placeholder="required"
+                                title="Email with appropriate domain"
+                                oninput="this.setCustomValidity('')"
+                                oninvalid="this.setCustomValidity('Please enter a valid email address')"
+                                onblur="email_validation();"
+                            >
+                            <div id="email_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                        <td>
+                            <input type="tel"
+                                size="12"
+                                maxlength="12"
+                                id="phone"
+                                name="phone"
+                                placeholder="xxx-xxx-xxxx"
+                                Title="Phone number with area code"
+                                oninvalid="this.setCustomValidity('Please enter a valid phone number with the area code')"
+                                oninput="phone_format(this)"
+                                onblur="phone_validation();"
+                            >
+                            <div id="phone_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                    </tr>
+                </table><!--End patient information fields-->
+                <br/>
+                <table>
+                    <tr>
+                        <td><label for="current_symptoms">Describe your current symptoms:</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <textarea
+                            id="current_symptoms"
+                            rows="5"
+                            cols="50"
+                            maxlength="256"
+                            minlength="3"
+                            name="current_symptoms"
+                            Title="Please describe any current symptoms"
+                            oninput="this.setCustomValidity('')"
+                            oninvalid="this.setCustomValidity('Please enter symptoms or N/A')"
+                            ></textarea><!--Putting on same line to start typing cursor at beginning of text box-->
+                        </td>
+                    </tr>
+                </table><!--End current symptoms box-->
+                <br/>
+                <i>Check all of the following that apply:</i>
+                <table><!--Diagnosis checkbox fields-->
+                    <tr>
+                        <td>Have you had:</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="cancer_check" name="cancer_check" value="Cancer"><label for="cancer_check">&nbsp;&nbsp;Cancer</label></td>
+                        <td><input type="checkbox" id="arthritis_check" name="arthritis_check" value="Arthritis"><label for="arthritis_check">&nbsp;&nbsp;Arthritis</label></td>
+                        <td><input type="checkbox" id="cardio_check" name="cardio_check" value="Cardiovascular Diseases"><label for="arthritis_check">&nbsp;&nbsp;Cardiovascular Diseases</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" id="diabetes_check" name="diabetes_check" value="Diabetes"><label for="diabetes_check">&nbsp;&nbsp;Diabetes</label></td>
+                        <td><input type="checkbox" id="depression_check" name="depression_check" value="Depression"><label for="depression_check">&nbsp;&nbsp;Depression</label></td>
+                    </tr>
+                </table><!--End Diagnosis checkbox fields-->
+                <br/>
+                <table><!--Gender, vaccination, and insurance fields-->
+                    <tr>
+                        <td>Gender:</td>
+                    <td>
+                        <input type="radio" id="gender_male" name="gender" value="Male">
+                        <label for="gender_male">&nbsp;&nbsp;Male</label>
+                    </td>
+                    <td>
+                        <input type="radio" id="gender_female" name="gender" value="Female">
+                        <label for="gender_female">&nbsp;&nbsp;Female</label>
+                    </td>
+                    <td>
+                        <input type="radio" id="gender_other" name="gender" value="Other">
+                        <label for="gender_other">&nbsp;&nbsp;Other</label>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Have you been vaccinated?</td>
+                        <td><input type="radio" id="vaccinated" name="vaccinated" value="vaccinated"><label for="vaccinated">&nbsp;&nbsp;YES</label></td>
+                        <td><input type="radio" id="vaccinated" name="vaccinated" value="vaccinated"><label for="vaccinated">&nbsp;&nbsp;NO</label></td>
+                    </tr>
+                    <tr>
+                        <td>Do you have insurance?</td>
+                        <td><input type="radio" id="insurance" name="insurance" value="insurance"><label for="insurance">&nbsp;&nbsp;YES</label></td>
+                        <td><input type="radio" id="insurance" name="insurance" value="insurance"><label for="insurance">&nbsp;&nbsp;NO</label></td>
+                    </tr>
+                </table><!--End Gender, vaccination, and insurance fields-->
+                <div id="health_slider">
+                    <p>On a scale of 1 to 10, 10 being feeling good, how is your health?</p>
+                    <input type="range" 
+                            min="1" 
+                            max="10" 
+                            value="1" 
+                            class="slider" 
+                            id="health_scale" 
+                            oninput="health_slider()"><!--health slider properties-->
+                    <br/>
+                    <span id="health_num">1</span>
+                </div><!--End div health_slider-->
+                <br/>
+                <table><!--UserID and password fields-->
+                    <tr>
+                        <td><label for="user_id">Desired User ID</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text"
+                                size="30"
+                                maxlength="30"
+                                minlength="5"
+                                id="user_id"
+                                name="user_id"
+                                required
+                                placeholder="required"
+                                title="Must be 5-30 characters, no special characters, first character cannot be a number"
+                                oninput="this.setCustomValidity('')"
+                                oninvalid="this.setCustomValidity('Please enter a valid user ID with 5-20 characters, no special characters, and first character cannot be a number')"
+                                onblur="userID_validation();"
+                            >
+                            <div id="userID_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="password_hashed">Password</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="password"
+                                size="30"
+                                maxlength="30"
+                                minlength="8"
+                                id="password_hashed"
+                                name="password_hashed"
+                                placeholder="required"
+                                title="Password with 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations"
+                                oninput="this.setCustomValidity('')"
+                                oninvalid="this.setCustomValidity('Please enter a valid password 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations')"
+                                onblur="password_validation();"
+                            >
+                            <div id="password_hashed_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="password_hashed_match">Re-enter Password</label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="password"
+                                size="30"
+                                maxlength="30"
+                                minlength="8"
+                                id="password_hashed_match"
+                                name="password_hashed_match"
+                                placeholder="required"
+                                title="Password with 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations"
+                                oninput="this.setCustomValidity('')"
+                                oninvalid="this.setCustomValidity('Please enter a valid password 8 to 30 characters, at least 1 upper case letter, and 1 special character excluding quotations')"
+                                onblur="check_password();"
+                            >
+                            <div id="password_hashed_match_error_message" class="error_message_format"></div> <!-- format the error message to be below the input field-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="remember_me" name="remember_me" value="Remember Me"><label for="remember_me">&nbsp;&nbsp;Remember Me</label>
+                        </td>
+                    </tr>
+                </table><!--End UserID and password fields-->
+                <br/>
+                <table id="form_buttons"><!-- Start and Submit buttons -->
+                    <tr>
+                        <td><input type="reset" name="start_over_button" value="Start Over" /></td>
+                        <td>&nbsp;</td>
+                        <td><button type="button" class="review_button" onclick="review_data()">Review Submission</button></td>
+                        <td>&nbsp;</td>
+                        <td><input type="submit" name="submit_button" id="submit_button" value="Submit" /></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table><!-- End Start over and Submit buttons -->
+            </div><!--End div form_body-->
+        </form>
+        <script> /* to return values when Review Submission is clicked */
+            function review_data() {
+                document.getElementById("displayFirstName").textContent = document.getElementById("first_name").value;
+                document.getElementById("displayMiddleInitial").textContent = document.getElementById("middle_initial").value;
+                document.getElementById("displayLastName").textContent = document.getElementById("last_name").value;
+                const current_dob_format = document.getElementById("dob").value; /* format DOB to MM/DD/YYYY */
+                const formatted_dob = new Date(current_dob_format).toLocaleDateString();
+                document.getElementById("displayDOB").textContent = formatted_dob; /* new DOB format to be displayed */
+                document.getElementById("displaySSN").textContent = document.getElementById("ssn").value;
+                document.getElementById("displayAddress1").textContent = document.getElementById("address1").value;
+                document.getElementById("displayAddress2").textContent = document.getElementById("address2").value;
+                document.getElementById("displayCity").textContent = document.getElementById("city").value;
+                /*format state to display full name */
+                const state_abbrev = document.getElementById("state");
+                const full_state_name = state_abbrev.options[state_abbrev.selectedIndex].text;
+                document.getElementById("displayState").textContent = full_state_name;
+                document.getElementById("displayZipCode").textContent = document.getElementById("zip_code").value;
+                document.getElementById("displayEmail").textContent = document.getElementById("email").value;
+                document.getElementById("displayPhone").textContent = document.getElementById("phone").value;
+                /* using ternary operator to change values to Y or N if checked or not */
+                document.getElementById("displayCurrentSymptoms").textContent = document.getElementById("current_symptoms").value;
+                document.getElementById("displayCancerCheck").textContent = document.getElementById("cancer_check").checked ? "Y":"N";
+                document.getElementById("displayArthritisCheck").textContent = document.getElementById("arthritis_check").checked ? "Y":"N";
+                document.getElementById("displayCardioCheck").textContent = document.getElementById("cardio_check").checked ? "Y":"N";
+                document.getElementById("displayDiabetesCheck").textContent = document.getElementById("diabetes_check").checked ? "Y":"N";
+                document.getElementById("displayDepressionCheck").textContent = document.getElementById("depression_check").checked ? "Y":"N";
+                const gender_value = document.getElementById("")
+                document.getElementById("form_review").style.display = "block"; /* display in new section once Review button is selected, accompanying formatting on CSS */
+                }
+        </script><!-- end Review Submission script-->
+        <div id="form_review">
+            <h2>Please review the inputted information before submitting</h2>
+            <p><strong>First Name: </strong><span id="displayFirstName"></span></p>
+            <p><strong>Middle Initial: </strong><span id="displayMiddleInitial"></span></p>
+            <p><strong>Last Name: </strong><span id="displayLastName"></span></p>
+            <p><strong>Date of Birth: </strong><span id="displayDOB"></span></p>
+            <p><strong>SSN: </strong><span id="displaySSN"></span></p>
+            <p><strong>Address Line 1: </strong><span id="displayAddress1"></span></p>
+            <p><strong>Address Line 2: </strong><span id="displayAddress2"></span></p>
+            <p><strong>City: </strong><span id="displayCity"></span></p>
+            <p><strong>State: </strong><span id="displayState"></span></p>
+            <p><strong>Zip Code: </strong><span id="displayZipCode"></span></p>
+            <p><strong>Email Address: </strong><span id="displayEmail"></span></p>
+            <p style="word-wrap:break-word;"><strong>Current Symptoms: </strong><span id="displayCurrentSymptoms"></span></p> <!--in-line CSS to wrap symptoms text to border-->
+            <p><strong>Phone Number: </strong><span id="displayPhone"></span></p>
+            <p><strong>Cancer: </strong><span id="displayCancerCheck"></span></p>
+            <p><strong>Arthritis: </strong><span id="displayArthritisCheck"></span></p>
+            <p><strong>Cardiovascular Diseases: </strong><span id="displayCardioCheck"></span></p>
+            <p><strong>Diabetes: </strong><span id="displayDiabetesCheck"></span></p>
+            <p><strong>Depression: </strong><span id="displayDepressionCheck"></span></p>
+        </div>
+        <br/>
+        <script src="patient-form.js"></script> <!-- placeholder for future .js file, using in-line javascript for now-->
+</body>
+</html>
